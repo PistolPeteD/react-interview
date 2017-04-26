@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import NavBar from './components/NavBar';
+import ShoeList from './components/ShoeList';
+import CartSummary from './components/CartSummary';
 import Api from './api';
+import {countByKey} from './utils';
 
 class App extends Component {
 
@@ -11,6 +14,11 @@ class App extends Component {
    * */
   constructor(props) {
     super(props);
+
+    this.state={
+      shoes: [], cart:[]};
+      this.handleShoeSelect=this.handleShoeSelect.bind(this);
+
   }
 
   /**
@@ -20,19 +28,42 @@ class App extends Component {
    * */
   componentDidMount() {
 
+    Api.getShoes().then(shoes => {
+        this.setState(
+            {
+                shoes
+            }
+        )
+        console.log(this.state)
+    });
+
   }
 
   handleShoeSelect (shoe) {
-
+      console.log("this.state",this.state);
+      var tempcart = this.state.cart;
+          tempcart.push(shoe);
+          this.setState(
+             {
+               cart: tempcart
+             }
+         )
+  console.log(tempcart)
   }
 
-  render() {
-    return (
+  render()
+  {      return (
       <div>
 
         <NavBar title="Hello World"/>
 
-        <div className="row">
+       <ShoeList onShoeSelect={this.handleShoeSelect} shoes={this.state.shoes}/>
+
+
+
+
+
+          <div className="row">
 
           <div className="col s3">
             I am the left pane
@@ -43,7 +74,7 @@ class App extends Component {
           </div>
 
           <div className="col s3">
-            Right?
+              <CartSummary cart={this.state.cart} />
           </div>
 
         </div>

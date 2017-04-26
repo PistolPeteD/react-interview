@@ -17,5 +17,24 @@
  * @param key A string of the object property
  */
 export function countByKey (arr, key) {
+    var newarr = [];
+    var count = 0;
+    ;
+    for (var i = 0; i < arr.length; i++) {
+
+        // if (arr[i].brand == key) {
+        {
+            count ++;
+            newarr.push([arr[i].brand,count])
+        };
+
+
+
+        // }
+    }
+    console.log("new.array",newarr);
+    return newarr;
+
+
 
 }

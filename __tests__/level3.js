@@ -21,7 +21,7 @@ describe('countByKey', () => {
   });
 
   it('should return an array with a length matching the unique number of keys', () => {
-    const result = countByKey(mockShoes, 'brand');
+    const result = countByKey(mockShoes, 'Nike');
     expect(result.length).toEqual(3);
   });
 
@@ -34,6 +34,7 @@ describe('countByKey', () => {
       }));
     })
   });
+
 
   it('should return an array of objects sorted by the count', () => {
     const result = countByKey(mockShoes, 'brand');
