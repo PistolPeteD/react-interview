@@ -71,7 +71,8 @@ describe('Facet', () => {
 describe('App', () => {
   it('should contain a <Facet /> component', () => {
     const wrapper = shallow(<App/>);
-    expect(wrapper.find(<Facet items={mockShoes}/>).length).toEqual(1);
+    // expect(wrapper.find(<Facet items={mockShoes}/>).length).toEqual(1);
+      expect(wrapper.find(Facet).length).toEqual(1);
   });
 
   it('should have `state.facetSelected` that equals null', () => {

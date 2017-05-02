@@ -3,7 +3,7 @@ import NavBar from './components/NavBar';
 import ShoeList from './components/ShoeList';
 import CartSummary from './components/CartSummary';
 import Api from './api';
-import {countByKey} from './utils';
+import Facet from './components/Facet';
 
 class App extends Component {
 
@@ -23,6 +23,7 @@ class App extends Component {
 
   /**
    * TIP:
+   *  - Api.getShoes() returns a promise
    *  - Api.getShoes() returns a promise
    *  - this.setState() might be useful
    * */
@@ -57,11 +58,9 @@ class App extends Component {
 
         <NavBar title="Hello World"/>
 
-       <ShoeList onShoeSelect={this.handleShoeSelect} shoes={this.state.shoes}/>
+        <ShoeList onShoeSelect={this.handleShoeSelect} shoes={this.state.shoes}/>
 
-
-
-
+        <Facet items={this.state.shoes}/>
 
           <div className="row">
 
