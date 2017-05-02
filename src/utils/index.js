@@ -16,25 +16,20 @@
  * @param arr An array of objects
  * @param key A string of the object property
  */
-export function countByKey (arr, key) {
-    var newarr = [];
-    var count = 0;
-    ;
-    for (var i = 0; i < arr.length; i++) {
-
-        // if (arr[i].brand == key) {
-        {
-            count ++;
-            newarr.push([arr[i].brand,count])
-        };
-
-
-
-        // }
-    }
-    console.log("new.array",newarr);
-    return newarr;
-
-
-
+export function countByKey(arr, key) {
+    let newArray = [];
+    arr.forEach(function (item) {
+        const value = item[key];
+        const foundItem = newArray.find(function (existingItem) {
+            return existingItem[key] === value;
+        });
+        if (foundItem) {
+            foundItem.count++;
+        } else {
+            let newItem = {count: 1};
+            newItem[key] = value;
+            newArray.push(newItem)
+        }
+    });
+    return newArray;
 }

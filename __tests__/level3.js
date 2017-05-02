@@ -21,7 +21,7 @@ describe('countByKey', () => {
   });
 
   it('should return an array with a length matching the unique number of keys', () => {
-    const result = countByKey(mockShoes, 'Nike');
+    const result = countByKey(mockShoes, 'brand');
     expect(result.length).toEqual(3);
   });
 
