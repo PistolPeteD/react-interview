@@ -54,7 +54,6 @@ describe('CartSummary', () => {
     it('should render the number of items in the cart in `span#ItemCount`', () => {
         const mockCart = [{name: 'A'}, {name: 'B'}];
         const wrapper = shallow(<CartSummary cart={mockCart}/>);
-        console.log('This console log', wrapper.find('#ItemCount').debug());
         expect(wrapper.find('#ItemCount').text()).toEqual("2");
     });
 
@@ -98,11 +97,9 @@ describe('Shoe', () => {
             const selectSpy = jest.fn();
             const wrapper = shallow(<Shoe {...mockShoe} onShoeSelect={selectSpy}/>);
             const button = wrapper.find('a').first();
-            console.log(selectSpy.mock);
             expect(selectSpy.mock.calls.length).toEqual(0);
 
             button.simulate('click');
-            console.log(selectSpy.mock);
             expect(selectSpy.mock.calls.length).toEqual(1);
             expect(selectSpy.mock.calls[0][0]).toEqual(expect.objectContaining(mockShoe));
         });
