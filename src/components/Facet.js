@@ -12,6 +12,7 @@ const Facet = (props) => (
 );
 
 
+
 Facet.propTypes = {
   items: React.PropTypes.array.isRequired,
   onFacetSelect: React.PropTypes.func

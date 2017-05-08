@@ -16,8 +16,10 @@ class App extends Component {
     super(props);
 
     this.state={
-      shoes: [], cart:[]};
+      shoes: [], cart:[], facetSelected:null,allshoes:[]} ;
       this.handleShoeSelect=this.handleShoeSelect.bind(this);
+      this.handleFacetSelect=this.handleFacetSelect.bind(this);
+
 
   }
 
@@ -32,7 +34,7 @@ class App extends Component {
     Api.getShoes().then(shoes => {
         this.setState(
             {
-                shoes
+                shoes, allshoes:shoes
             }
         )
         console.log(this.state)
@@ -52,6 +54,40 @@ class App extends Component {
   console.log(tempcart)
   }
 
+ handleFacetSelect (facetSelected) {
+
+      if (this.state.facetSelected === facetSelected)
+
+
+      {
+          this.setState(
+
+
+          {
+               facetSelected: null
+          }
+
+      )}
+      else
+      {
+      this.setState(
+
+         {
+
+           facetSelected: facetSelected
+        }
+      )
+          console.log("shoes before filter",this.state.shoes);
+          var filterBrand = this.state.allshoes.filter(function (shoe) {
+              return (shoe.brand === facetSelected.brand)
+          });
+
+       this.setState({shoes:filterBrand});
+      console.log(filterBrand);
+      }
+
+  }
+
   render()
   {      return (
       <div>
@@ -60,7 +96,7 @@ class App extends Component {
 
         <ShoeList onShoeSelect={this.handleShoeSelect} shoes={this.state.shoes}/>
 
-        <Facet items={this.state.shoes}/>
+        <Facet items={this.state.allshoes} onFacetSelect={this.handleFacetSelect} />
 
           <div className="row">
 
