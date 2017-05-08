@@ -15,8 +15,13 @@ const CartDetails = (props) => {
                 <div> {Detail.brand} </div>
                 <div> {Detail.name}  </div>
                 <div> {Detail.price} </div>
+                 <div>
+                     <a onClick={() => props.onShoeRemove(props)}>Remove From Cart</a>
+                 </div>
              </div>
+
             )}
+
 
         </div>
 

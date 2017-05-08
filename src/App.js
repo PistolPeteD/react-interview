@@ -21,7 +21,8 @@ class App extends Component {
         };
         this.handleShoeSelect = this.handleShoeSelect.bind(this);
         this.handleFacetSelect = this.handleFacetSelect.bind(this);
-
+        this.handleShoeRemove = this.handleShoeRemove.bind(this);
+    //
 
     }
 
@@ -52,6 +53,17 @@ class App extends Component {
             }
         )
     }
+
+    handleShoeRemove(shoe) {
+        var tempcart = this.state.cart;
+        tempcart.pop(shoe);
+        this.setState(
+            {
+                cart: tempcart
+            }
+        )
+    }
+
 
     handleFacetSelect(facetSelected) {
 
@@ -114,7 +126,7 @@ class App extends Component {
                     </div>
 
                     <div className="col s7">
-                        <CartDetails cart={this.state.cart}/>
+                        <CartDetails onShoeRemove={this.handleShoeRemove} cart={this.state.cart}/>
                     </div>
 
                 </div>
