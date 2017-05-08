@@ -2,9 +2,9 @@ import React from 'react';
 
 const Shoe = (props) => (
     <div>
-        {props.brand}
-        {props.name}
-        {props.price.toFixed(2)}
+        <div> {props.brand} >> {props.name} </div>
+        <div> {'R ' + props.price.toFixed(2)}   </div>
+
 
        <div>
             <a onClick={() => props.onShoeSelect(props)}>Add to Cart</a>

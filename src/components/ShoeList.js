@@ -4,9 +4,9 @@ import Shoe from './Shoe';
 const ShoeList = (props) => (
 
     <div>
-        <div>Shoe List</div>
+        <div align="right"><h3>Shoe List</h3></div>
         {props.shoes.map((shoe) =>
-         <Shoe brand={shoe.brand}
+            <Shoe brand={shoe.brand}
                name={shoe.name}
                price={shoe.price}
                onShoeSelect={()=> props.onShoeSelect(shoe)}

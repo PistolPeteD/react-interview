@@ -104,30 +104,25 @@ class App extends Component {
         return (
             <div>
 
-                <NavBar title="Hello World"/>
-
-                <ShoeList onShoeSelect={this.handleShoeSelect} shoes={this.state.shoes}/>
-
-                <Facet items={this.state.allshoes} onFacetSelect={this.handleFacetSelect} />
-
+                <NavBar title="My App Store" />
 
                 <div className="row">
 
-                    {/*<div className="col s3">*/}
-                        {/*I am the left pane*/}
-                    {/*</div>*/}
+                    <div className="col s3">
+                        <Facet items={this.state.allshoes} onFacetSelect={this.handleFacetSelect} />
+                    </div>
 
-                    {/*<div className="col s6">*/}
-                        {/*I am in the middle*/}
-                    {/*</div>*/}
+
+                    <div className="col s6">
+                        <ShoeList onShoeSelect={this.handleShoeSelect} shoes={this.state.shoes}/>
+                    </div>
+
 
                     <div className="col s3">
                         <CartSummary cart={this.state.cart}/>
-                    </div>
-
-                    <div className="col s7">
                         <CartDetails onShoeRemove={this.handleShoeRemove} cart={this.state.cart}/>
                     </div>
+
 
                 </div>
             </div>
