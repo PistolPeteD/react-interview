@@ -67,17 +67,14 @@ class App extends Component {
 
     handleFacetSelect(facetSelected) {
 
-          console.log("before peter ",this.state.allshoes);
-        console.log("this.state.facetSelected ",this.state.facetSelected);
-        console.log("facetSelected ",facetSelected);
-        // debugger;
+
         if (this.state.facetSelected!= null)
         {
 
 
         if (this.state.facetSelected.brand === facetSelected.brand) {
             //to do restore the list of shoes.
-            console.log("after peter ",this.state.allshoes);
+
             this.setState(
                 {
                     facetSelected: null,
@@ -87,7 +84,7 @@ class App extends Component {
 
             )
 
-            console.log("after peter shoes ",this.state.shoes);
+
         }}
          else {
             const filterBrand = this.state.allshoes.filter(function (shoe) {
@@ -118,7 +115,7 @@ class App extends Component {
                     </div>
 
 
-                    <div className="col s3">
+                    <div className="col s3" >
                         <CartSummary cart={this.state.cart}/>
                         <CartDetails onShoeRemove={this.handleShoeRemove} cart={this.state.cart}/>
                     </div>

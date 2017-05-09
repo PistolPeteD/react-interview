@@ -3,6 +3,7 @@ import {shallow} from 'enzyme';
 import Facet from '../src/components/Facet';
 import App from '../src/App';
 import {countByKey} from '../src/utils';
+import CartDetails from '../src/components/CartDetails';
 
 const mockShoes = [
     {id: 'a', brand: 'Nike', name: 'Air Max 90', price: 2999.99},
@@ -122,8 +123,37 @@ describe('App', () => {
 
     });
 
-    // ??it('the list of shoes display should be filter based on the facet selected', () => {
-    //   WRITE THIS TEST! THIS IS THE MAIN ONE
-    //   return false;
-    // });
+    // Peter Ebersey own tests
+
+    it('should pass a function called `onShoeRemove` as a prop to <CartDetails />', () => {
+        const wrapper = shallow(<App/>);
+        const shoeListRemoveProps = wrapper.find(CartDetails).props();
+        expect(Object.keys(shoeListRemoveProps)).toContain('onShoeRemove');
+        expect(shoeListRemoveProps.onShoeRemove).toBeInstanceOf(Function);
+    });
+
+    it('should have an instance method called `handleShoeRemove`', () => {
+        const wrapper = shallow(<App/>);
+        expect(wrapper.instance().handleShoeRemove).toBeInstanceOf(Function);
+    });
+
+    it('`handleShoeSelect()` should add the item to `state.cart`', () => {
+        const wrapper = shallow(<App/>);
+        const mockShoe = {name: 'Air Max 1000'};
+        expect(wrapper.state().cart.length).toEqual(0);
+
+        wrapper.instance().handleShoeSelect(mockShoe);
+        expect(wrapper.state().cart).toContain(mockShoe);
+        expect(wrapper.state().cart.length).toEqual(1);
+    });
+
+     it('`handleShoeRemove()` should delete the item from `state.cart`', () => {
+         const wrapper = shallow(<App/>);
+         const mockShoe = {name: 'Air Max 1000'};
+         wrapper.instance().handleShoeSelect(mockShoe);
+         expect(wrapper.state().cart.length).toEqual(1);
+         wrapper.instance().handleShoeRemove(mockShoe);
+         expect(wrapper.state().cart.length).toEqual(0);
+    });
+
 });

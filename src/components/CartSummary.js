@@ -12,7 +12,7 @@ const CartSummary = (props) => {
 
 
         <div className="CartSummary">
-            <h3>My Cart </h3>
+            <h3>My Cart Summary</h3>
             <label id="ItemCount">{props.cart.length}</label><br/>
             <label id="TotalCost">{TotalSum.toFixed(2)}</label>
 
