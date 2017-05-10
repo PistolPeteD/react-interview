@@ -19,6 +19,7 @@ const CartSummary = (props) => {
         </div>
 
 
+
     )
 };
 

@@ -5,6 +5,27 @@ import CartSummary from './components/CartSummary';
 import CartDetails from './components/CartDetails';
 import Api from './api';
 import Facet from './components/Facet';
+import {
+    BrowserRouter as Router,
+    Route,
+    Link
+} from 'react-router-dom';
+
+const Match = ({ pattern, component: Component }) => {
+    const pathname = window.location.pathname;
+    if (pathname.match(pattern)) {
+        return (
+            <Component />
+        );
+    } else {
+        return null;
+    }
+};
+
+
+const Atlantic = () => { return(<h2>Atlantic</h2> )};
+
+const Pacific = () => { return(<h2>Pacific</h2> )};
 
 class App extends Component {
 
@@ -22,7 +43,7 @@ class App extends Component {
         this.handleShoeSelect = this.handleShoeSelect.bind(this);
         this.handleFacetSelect = this.handleFacetSelect.bind(this);
         this.handleShoeRemove = this.handleShoeRemove.bind(this);
-    //
+
 
     }
 
@@ -44,15 +65,42 @@ class App extends Component {
 
     }
 
-    handleShoeSelect(shoe) {
-        var tempcart = this.state.cart;
-        tempcart.push(shoe);
-        this.setState(
-            {
-                cart: tempcart
-            }
-        )
-    }
+
+
+
+     handleShoeSelect(shoe) {
+         var tempcart = this.state.cart;
+
+         console.log("test");
+         console.log("tempcart.name :",tempcart);
+         console.log("shoe.name :",shoe.name);
+         var foundItem = tempcart.find(function (existingItem) {
+             // console.log("existingItem :",existingItem.name);
+             console.log("existingItemlength :",existingItem.name);
+             return existingItem.name === shoe.name;
+         });
+
+         console.log("foundItem",foundItem)
+
+         if (foundItem) {
+             console.log("if condition");
+             foundItem.quantity++;
+             foundItem.amount += (foundItem.price);
+
+         } else {
+
+             // var CheckOut={shoe: shoe,quantity:1};
+             shoe.quantity = 1;
+             shoe.amount   = shoe.price;
+             tempcart.push(shoe);
+         }
+
+         this.setState(
+             {
+                 cart: tempcart
+             }
+         )
+     }
 
     handleShoeRemove(shoe) {
         var tempcart = this.state.cart;
@@ -68,9 +116,9 @@ class App extends Component {
     handleFacetSelect(facetSelected) {
 
 
-        if (this.state.facetSelected!= null)
-        {
 
+        if (this.state.facetSelected!= null && this.state.facetSelected.brand === facetSelected.brand)
+        {
 
         if (this.state.facetSelected.brand === facetSelected.brand) {
             //to do restore the list of shoes.
@@ -86,7 +134,9 @@ class App extends Component {
 
 
         }}
+
          else {
+
             const filterBrand = this.state.allshoes.filter(function (shoe) {
                 return (shoe.brand === facetSelected.brand)
             });
@@ -94,8 +144,11 @@ class App extends Component {
                 facetSelected: facetSelected,
                 shoes: filterBrand
             });
+
+
         }
-    }
+            }
+
 
     render() {
         return (
@@ -105,7 +158,7 @@ class App extends Component {
 
                 <div className="row">
 
-                    <div className="col s3">
+                    <div className="col s3" >
                         <Facet items={this.state.allshoes} onFacetSelect={this.handleFacetSelect} />
                     </div>
 
@@ -118,10 +171,28 @@ class App extends Component {
                     <div className="col s3" >
                         <CartSummary cart={this.state.cart}/>
                         <CartDetails onShoeRemove={this.handleShoeRemove} cart={this.state.cart}/>
+
+
                     </div>
 
 
                 </div>
+
+                <ul>
+                    <li>
+                        <a href='/atlantic'>
+                            <code>/atlantic</code>
+                        </a>
+                    </li>
+                    <li>
+                        <a href='/pacific'>
+                            <code>/pacific</code>
+                        </a>
+                    </li>
+                </ul>
+                <hr />
+                <Match pattern='/atlantic' component={Atlantic} />
+                <Match pattern='/pacific' component={Pacific} />
             </div>
 
         );
