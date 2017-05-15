@@ -5,27 +5,31 @@ import CartSummary from './components/CartSummary';
 import CartDetails from './components/CartDetails';
 import Api from './api';
 import Facet from './components/Facet';
-import {
-    BrowserRouter as Router,
-    Route,
-    Link
-} from 'react-router-dom';
+import { Switch, Route, Link, Redirect } from 'react-router-dom'
+// import CheckOutForm from  './components/CheckOutForm';
 
-const Match = ({ pattern, component: Component }) => {
-    const pathname = window.location.pathname;
-    if (pathname.match(pattern)) {
-        return (
-            <Component />
-        );
-    } else {
-        return null;
+
+
+class CheckOutForm extends Component {
+    constructor(props) {
+        super(props);
+
     }
-};
+
+    render() {
+        return (
+            <div>
+
+                <div> I have landed on the page</div>
+            </div>
 
 
-const Atlantic = () => { return(<h2>Atlantic</h2> )};
 
-const Pacific = () => { return(<h2>Pacific</h2> )};
+
+
+        );
+    }
+}
 
 class App extends Component {
 
@@ -38,11 +42,12 @@ class App extends Component {
         super(props);
 
         this.state = {
-            shoes: [], cart: [], facetSelected: null, allshoes: []
+            shoes: [], cart: [], facetSelected: null, allshoes: [], isMainIn: true, removeCartButton:true
         };
         this.handleShoeSelect = this.handleShoeSelect.bind(this);
         this.handleFacetSelect = this.handleFacetSelect.bind(this);
         this.handleShoeRemove = this.handleShoeRemove.bind(this);
+        this.switchScreens = this.switchScreens.bind(this);
 
 
     }
@@ -65,42 +70,50 @@ class App extends Component {
 
     }
 
+    switchScreens(){
+        if  (this.state.isMainIn) {
+            this.setState({isMainIn: false, removeCartButton: false});
+        } else
+        {
+            this.setState( { isMainIn: true, removeCartButton:true } );
+        }
+    }
 
 
 
-     handleShoeSelect(shoe) {
-         var tempcart = this.state.cart;
 
-         console.log("test");
-         console.log("tempcart.name :",tempcart);
-         console.log("shoe.name :",shoe.name);
-         var foundItem = tempcart.find(function (existingItem) {
-             // console.log("existingItem :",existingItem.name);
-             console.log("existingItemlength :",existingItem.name);
-             return existingItem.name === shoe.name;
-         });
+    handleShoeSelect(shoe) {
+        var tempcart = this.state.cart;
 
-         console.log("foundItem",foundItem)
+        console.log("test");
+        console.log("tempcart.name :",tempcart);
+        console.log("shoe.name :",shoe.name);
+        var foundItem = tempcart.find(function (existingItem) {
+            // console.log("existingItem :",existingItem.name);
+            console.log("existingItemlength :",existingItem.name);
+            return existingItem.name === shoe.name;
+        });
 
-         if (foundItem) {
-             console.log("if condition");
-             foundItem.quantity++;
-             foundItem.amount += (foundItem.price);
+        console.log("foundItem",foundItem)
 
-         } else {
+        if (foundItem) {
+            console.log("if condition");
+            foundItem.quantity++;
+            foundItem.amount += (foundItem.price);
 
-             // var CheckOut={shoe: shoe,quantity:1};
-             shoe.quantity = 1;
-             shoe.amount   = shoe.price;
-             tempcart.push(shoe);
-         }
+        } else {
 
-         this.setState(
-             {
-                 cart: tempcart
-             }
-         )
-     }
+            shoe.quantity = 1;
+            shoe.amount   = shoe.price;
+            tempcart.push(shoe);
+        }
+
+        this.setState(
+            {
+                cart: tempcart
+            }
+        )
+    }
 
     handleShoeRemove(shoe) {
         var tempcart = this.state.cart;
@@ -113,6 +126,7 @@ class App extends Component {
     }
 
 
+
     handleFacetSelect(facetSelected) {
 
 
@@ -120,22 +134,22 @@ class App extends Component {
         if (this.state.facetSelected!= null && this.state.facetSelected.brand === facetSelected.brand)
         {
 
-        if (this.state.facetSelected.brand === facetSelected.brand) {
-            //to do restore the list of shoes.
+            if (this.state.facetSelected.brand === facetSelected.brand) {
+                //to do restore the list of shoes.
 
-            this.setState(
-                {
-                    facetSelected: null,
-                    shoes:this.state.allshoes
+                this.setState(
+                    {
+                        facetSelected: null,
+                        shoes:this.state.allshoes
 
-                }
+                    }
 
-            )
+                )
 
 
-        }}
+            }}
 
-         else {
+        else {
 
             const filterBrand = this.state.allshoes.filter(function (shoe) {
                 return (shoe.brand === facetSelected.brand)
@@ -147,56 +161,84 @@ class App extends Component {
 
 
         }
-            }
+    }
 
 
     render() {
-        return (
-            <div>
+        console.log("this.state.cart",this.state.cart)
+        if (this.state.isMainIn) {
+            return (
+                <div>
 
-                <NavBar title="My App Store" />
+                    <NavBar title="My App Store" />
+                    <div className="row">
 
-                <div className="row">
+                        <div className="col s3" >
+                            <Facet items={this.state.allshoes} onFacetSelect={this.handleFacetSelect} />
+                        </div>
 
-                    <div className="col s3" >
-                        <Facet items={this.state.allshoes} onFacetSelect={this.handleFacetSelect} />
+
+                        <div className="col s6">
+                            <ShoeList onShoeSelect={this.handleShoeSelect} shoes={this.state.shoes}/>
+                        </div>
+
+
+                        <div className="col s3" >
+                            <CartSummary cart={this.state.cart}/>
+                            <CartDetails onShoeRemove={this.handleShoeRemove} cart={this.state.cart} removeCartButton={this.state.removeCartButton}/>
+
+                        </div>
+
+                        <div>
+                            <div>
+                                {/*<a className="item" onClick={this.switchScreens} >CheckOut</a>*/}
+                                <ul>
+                                    {/*<li><Link to='/'>Home</Link></li>*/}
+                                    <button>
+                                    <Link to='/checkout' onClick={this.switchScreens}>CheckOut</Link>
+                                    </button>
+                                    {/*<li><Link to='/checkout'>Checkout</Link></li>*/}
+                                    {/*<li><Link to='/schedule'>Schedule</Link></li>*/}
+                                </ul>
+
+                                {/*<Route path='/checkout' component={CheckOutForm}/>*/}
+                                <Route exactly path="/" render={() => (
+                                    <Redirect
+                                        to="/"
+                                    />
+                                )} />
+
+                                {/*<Switch>*/}
+                                {/*<Route exact path='/' component={Home}/>*/}
+
+                                {/*<Route path='/schedule' component={Schedule}/>*/}
+
+                                {/*{this.props.children}*/}
+                                {/*</Switch>*/}
+                            </div>
+                        </div>
+
+
                     </div>
-
-
-                    <div className="col s6">
-                        <ShoeList onShoeSelect={this.handleShoeSelect} shoes={this.state.shoes}/>
-                    </div>
-
-
-                    <div className="col s3" >
-                        <CartSummary cart={this.state.cart}/>
-                        <CartDetails onShoeRemove={this.handleShoeRemove} cart={this.state.cart}/>
-
-
-                    </div>
-
 
                 </div>
 
-                <ul>
-                    <li>
-                        <a href='/atlantic'>
-                            <code>/atlantic</code>
-                        </a>
-                    </li>
-                    <li>
-                        <a href='/pacific'>
-                            <code>/pacific</code>
-                        </a>
-                    </li>
-                </ul>
-                <hr />
-                <Match pattern='/atlantic' component={Atlantic} />
-                <Match pattern='/pacific' component={Pacific} />
-            </div>
 
-        );
+            );
+        } else {
+            return (
+                <div>
+                <CartDetails onShoeRemove={this.handleShoeRemove} cart={this.state.cart} removeCartButton={this.state.removeCartButton}/>
+                <button type="button">Pay</button>
+                    <hr/>
+                    <button>
+                        <Link to='/' onClick={this.switchScreens}>Back to Store</Link>
+                    </button>
+                </div>
+            )
+        }
     }
 }
+
 
 export default App;

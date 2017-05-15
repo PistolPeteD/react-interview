@@ -16,9 +16,12 @@ const CartDetails = (props) => {
                 <div> No.of Units: {Detail.quantity}  </div>
                 <div> Price per Unit: {Detail.price.toFixed(2)}  </div>
                 <div> Total Amount: {Detail.amount.toFixed(2)}      </div>
+                 {props.removeCartButton ?
                 <div>
                      <a onClick={() => props.onShoeRemove(props)}>Remove From Cart</a>
                  </div>
+                 : null}
+
              </div>
 
             )}
