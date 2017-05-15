@@ -17,6 +17,7 @@ const ShoeList = (props) => (
 
 
 
+
 ShoeList.propTypes = {
   shoes: React.PropTypes.array.isRequired,
   onShoeSelect: React.PropTypes.func

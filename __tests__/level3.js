@@ -156,4 +156,19 @@ describe('App', () => {
          expect(wrapper.state().cart.length).toEqual(0);
     });
 
+
+    it('`RemoveShoeSelect()` should remove  the item to `state.cart`', () => {
+        const wrapper = shallow(<App/>);
+        const mockShoess = [[{name: 'Ultra Boost',quantity:2,amount:"299.99"},{name: 'Ultra Peter',quantity:2,amount:"299.99"},{quantity:4},{amount:"349"}]];
+
+        wrapper.instance().handleShoeSelect(mockShoess);
+        expect(wrapper.state().cart.length).toEqual(2);
+         wrapper.instance().handleShoeRemove(mockShoess);
+         expect(wrapper.state().cart.length).toEqual(1);
+         // expect(wrapper.state().cart).toContain(mockShoe);
+
+    });
+
 });
+
+

@@ -10,26 +10,26 @@ import { Switch, Route, Link, Redirect } from 'react-router-dom'
 
 
 
-class CheckOutForm extends Component {
-    constructor(props) {
-        super(props);
-
-    }
-
-    render() {
-        return (
-            <div>
-
-                <div> I have landed on the page</div>
-            </div>
-
-
-
-
-
-        );
-    }
-}
+// class CheckOutForm extends Component {
+//     constructor(props) {
+//         super(props);
+//
+//     }
+//
+//     render() {
+//         return (
+//             <div>
+//
+//                 <div> I have landed on the page</div>
+//             </div>
+//
+//
+//
+//
+//
+//         );
+//     }
+// }
 
 class App extends Component {
 
@@ -81,7 +81,6 @@ class App extends Component {
 
 
 
-
     handleShoeSelect(shoe) {
         var tempcart = this.state.cart;
 
@@ -115,6 +114,8 @@ class App extends Component {
         )
     }
 
+
+
     handleShoeRemove(shoe) {
         var tempcart = this.state.cart;
         tempcart.pop(shoe);
@@ -134,7 +135,7 @@ class App extends Component {
         if (this.state.facetSelected!= null && this.state.facetSelected.brand === facetSelected.brand)
         {
 
-            if (this.state.facetSelected.brand === facetSelected.brand) {
+            if (this.state.facetSelected.brand != facetSelected.brand) {
                 //to do restore the list of shoes.
 
                 this.setState(
@@ -228,6 +229,7 @@ class App extends Component {
         } else {
             return (
                 <div>
+                <CartSummary cart={this.state.cart}/>
                 <CartDetails onShoeRemove={this.handleShoeRemove} cart={this.state.cart} removeCartButton={this.state.removeCartButton}/>
                 <button type="button">Pay</button>
                     <hr/>
