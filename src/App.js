@@ -84,19 +84,13 @@ class App extends Component {
     handleShoeSelect(shoe) {
         var tempcart = this.state.cart;
 
-        console.log("test");
-        console.log("tempcart.name :",tempcart);
-        console.log("shoe.name :",shoe.name);
+
         var foundItem = tempcart.find(function (existingItem) {
-            // console.log("existingItem :",existingItem.name);
-            console.log("existingItemlength :",existingItem.name);
             return existingItem.name === shoe.name;
         });
 
-        console.log("foundItem",foundItem)
 
         if (foundItem) {
-            console.log("if condition");
             foundItem.quantity++;
             foundItem.amount += (foundItem.price);
 
@@ -166,7 +160,6 @@ class App extends Component {
 
 
     render() {
-        console.log("this.state.cart",this.state.cart)
         if (this.state.isMainIn) {
             return (
                 <div>
