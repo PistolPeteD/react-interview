@@ -1,5 +1,10 @@
 body {
-  margin: 0;
-  padding: 0;
-  background-color: whitesmoke;
+    margin: 0;
+    padding: 0;
+    background-color: whitesmoke;
+}
+
+#fixed-button {
+    width: 200px;
+
 }

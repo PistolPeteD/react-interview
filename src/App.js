@@ -5,31 +5,7 @@ import CartSummary from './components/CartSummary';
 import CartDetails from './components/CartDetails';
 import Api from './api';
 import Facet from './components/Facet';
-import { Switch, Route, Link, Redirect } from 'react-router-dom'
-// import CheckOutForm from  './components/CheckOutForm';
-
-
-
-// class CheckOutForm extends Component {
-//     constructor(props) {
-//         super(props);
-//
-//     }
-//
-//     render() {
-//         return (
-//             <div>
-//
-//                 <div> I have landed on the page</div>
-//             </div>
-//
-//
-//
-//
-//
-//         );
-//     }
-// }
+import {Switch, Route, Link, Redirect} from 'react-router-dom'
 
 class App extends Component {
 
@@ -42,7 +18,7 @@ class App extends Component {
         super(props);
 
         this.state = {
-            shoes: [], cart: [], facetSelected: null, allshoes: [], isMainIn: true, removeCartButton:true
+            shoes: [], cart: [], facetSelected: null, allshoes: [], isMainIn: true, removeCartButton: true
         };
         this.handleShoeSelect = this.handleShoeSelect.bind(this);
         this.handleFacetSelect = this.handleFacetSelect.bind(this);
@@ -70,15 +46,13 @@ class App extends Component {
 
     }
 
-    switchScreens(){
-        if  (this.state.isMainIn) {
+    switchScreens() {
+        if (this.state.isMainIn) {
             this.setState({isMainIn: false, removeCartButton: false});
-        } else
-        {
-            this.setState( { isMainIn: true, removeCartButton:true } );
+        } else {
+            this.setState({isMainIn: true, removeCartButton: true});
         }
     }
-
 
 
     handleShoeSelect(shoe) {
@@ -97,7 +71,7 @@ class App extends Component {
         } else {
 
             shoe.quantity = 1;
-            shoe.amount   = shoe.price;
+            shoe.amount = shoe.price;
             tempcart.push(shoe);
         }
 
@@ -109,10 +83,29 @@ class App extends Component {
     }
 
 
-
     handleShoeRemove(shoe) {
+
         var tempcart = this.state.cart;
-        tempcart.pop(shoe);
+        console.log("tempcart", tempcart);
+        console.log("shoe", shoe);
+
+
+        var foundItem = tempcart.findIndex(function (existingItem) {
+            return existingItem.name === shoe.name;
+        });
+
+        if (tempcart[foundItem].quantity == 1) {
+            // tempcart.pop(shoe.name);
+            //
+            tempcart.splice(foundItem, 1);
+
+        } else if (tempcart[foundItem].quantity > 1) {
+            tempcart[foundItem].quantity--;
+            tempcart[foundItem].amount -= tempcart[foundItem].price;
+
+        }
+
+
         this.setState(
             {
                 cart: tempcart
@@ -121,28 +114,25 @@ class App extends Component {
     }
 
 
-
     handleFacetSelect(facetSelected) {
 
 
+        if (this.state.facetSelected != null && this.state.facetSelected.brand === facetSelected.brand) {
 
-        if (this.state.facetSelected!= null && this.state.facetSelected.brand === facetSelected.brand)
-        {
-
-            if (this.state.facetSelected.brand != facetSelected.brand) {
+            if (this.state.facetSelected.brand === facetSelected.brand) {
                 //to do restore the list of shoes.
 
                 this.setState(
                     {
                         facetSelected: null,
-                        shoes:this.state.allshoes
+                        shoes: this.state.allshoes
 
                     }
-
                 )
 
 
-            }}
+            }
+        }
 
         else {
 
@@ -160,15 +150,16 @@ class App extends Component {
 
 
     render() {
+        console.log("this.state.cart", this.state.cart)
         if (this.state.isMainIn) {
             return (
                 <div>
 
-                    <NavBar title="My App Store" />
+                    <NavBar title="My App Store"/>
                     <div className="row">
 
-                        <div className="col s3" >
-                            <Facet items={this.state.allshoes} onFacetSelect={this.handleFacetSelect} />
+                        <div className="col s3">
+                            <Facet items={this.state.allshoes} onFacetSelect={this.handleFacetSelect}/>
                         </div>
 
 
@@ -177,40 +168,34 @@ class App extends Component {
                         </div>
 
 
-                        <div className="col s3" >
-                            <CartSummary cart={this.state.cart}/>
-                            <CartDetails onShoeRemove={this.handleShoeRemove} cart={this.state.cart} removeCartButton={this.state.removeCartButton}/>
-
-                        </div>
-
-                        <div>
+                        <div className="col s3">
                             <div>
-                                {/*<a className="item" onClick={this.switchScreens} >CheckOut</a>*/}
-                                <ul>
-                                    {/*<li><Link to='/'>Home</Link></li>*/}
-                                    <button>
-                                    <Link to='/checkout' onClick={this.switchScreens}>CheckOut</Link>
-                                    </button>
-                                    {/*<li><Link to='/checkout'>Checkout</Link></li>*/}
-                                    {/*<li><Link to='/schedule'>Schedule</Link></li>*/}
-                                </ul>
 
-                                {/*<Route path='/checkout' component={CheckOutForm}/>*/}
-                                <Route exactly path="/" render={() => (
-                                    <Redirect
-                                        to="/"
-                                    />
-                                )} />
+                                <CartSummary cart={this.state.cart}/>
 
-                                {/*<Switch>*/}
-                                {/*<Route exact path='/' component={Home}/>*/}
-
-                                {/*<Route path='/schedule' component={Schedule}/>*/}
-
-                                {/*{this.props.children}*/}
-                                {/*</Switch>*/}
                             </div>
+                            <button id="fixed-button">
+                                <Link to='/checkout' onClick={this.switchScreens}>CheckOut</Link>
+                            </button>
+
+                            <div>
+                                <CartDetails onShoeRemove={this.handleShoeRemove} cart={this.state.cart}
+                                             removeCartButton={this.state.removeCartButton}/>
+                            </div>
+
+
+                            <Route exactly path="/" render={() => (
+                                <Redirect
+                                    to="/"
+                                />
+                            )}/>
+
                         </div>
+
+
+                    </div>
+
+                    <div>
 
 
                     </div>
@@ -222,9 +207,10 @@ class App extends Component {
         } else {
             return (
                 <div>
-                <CartSummary cart={this.state.cart}/>
-                <CartDetails onShoeRemove={this.handleShoeRemove} cart={this.state.cart} removeCartButton={this.state.removeCartButton}/>
-                <button type="button">Pay</button>
+                    <CartSummary cart={this.state.cart}/>
+                    <CartDetails onShoeRemove={this.handleShoeRemove} cart={this.state.cart}
+                                 removeCartButton={this.state.removeCartButton}/>
+                    <button type="button">Pay</button>
                     <hr/>
                     <button>
                         <Link to='/' onClick={this.switchScreens}>Back to Store</Link>

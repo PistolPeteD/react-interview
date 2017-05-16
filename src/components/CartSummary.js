@@ -6,7 +6,7 @@ const CartSummary = (props) => {
 
     props.cart.forEach((value) => {
         TotalSum += (value.amount);
-        TotalQuantity+= (value.quantity);
+        TotalQuantity += (value.quantity);
 
     });
 
@@ -17,7 +17,8 @@ const CartSummary = (props) => {
             <h3>My Cart Summary</h3>
             <label id="ItemCount">{TotalQuantity}</label><br/>
             <label id="TotalCost">{TotalSum.toFixed(2)}</label>
-
+            <br />
+            <br />
         </div>
 
 

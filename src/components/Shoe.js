@@ -6,9 +6,9 @@ const Shoe = (props) => (
         <div> {'R ' + props.price.toFixed(2)}   </div>
 
 
-       <div>
+        <div>
             <a onClick={() => props.onShoeSelect(props)}>Add to Cart</a>
-       </div>
+        </div>
 
     </div>
 );

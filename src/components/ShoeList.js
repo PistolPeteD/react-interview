@@ -7,20 +7,18 @@ const ShoeList = (props) => (
         <div align="right"><h3>Shoe List</h3></div>
         {props.shoes.map((shoe) =>
             <Shoe brand={shoe.brand}
-               name={shoe.name}
-               price={shoe.price}
-               onShoeSelect={()=> props.onShoeSelect(shoe)}
-         />)}
+                  name={shoe.name}
+                  price={shoe.price}
+                  onShoeSelect={() => props.onShoeSelect(shoe)}
+            />)}
 
-   </div>
+    </div>
 );
 
 
-
-
 ShoeList.propTypes = {
-  shoes: React.PropTypes.array.isRequired,
-  onShoeSelect: React.PropTypes.func
+    shoes: React.PropTypes.array.isRequired,
+    onShoeSelect: React.PropTypes.func
 };
 
 export default ShoeList;
