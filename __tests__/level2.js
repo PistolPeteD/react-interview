@@ -52,15 +52,15 @@ describe('App', () => {
 describe('CartSummary', () => {
 
     it('should render the number of items in the cart in `span#ItemCount`', () => {
-        const mockCart = [{name: 'A'}, {name: 'B'}];
+        const mockCart = [{name: 'A',quantity:1}, {name: 'B',quantity:1}];
         const wrapper = shallow(<CartSummary cart={mockCart}/>);
         expect(wrapper.find('#ItemCount').text()).toEqual("2");
     });
 
     it('should render the total cost of all items in the cart in `span#TotalCost`', () => {
-        const mockCart = [{name: 'A', price: 50.10}, {name: 'B', price: 60.20}];
+        const mockCart = [{name: 'A', price: 50.10, amount:10.00}, {name: 'B', price: 60.20, amount:20.00}];
         const wrapper = shallow(<CartSummary cart={mockCart}/>);
-        expect(wrapper.find('#TotalCost').text()).toEqual("110.30");
+        expect(wrapper.find('#TotalCost').text()).toEqual("30.00");
     });
 
 });

@@ -147,27 +147,37 @@ describe('App', () => {
         expect(wrapper.state().cart.length).toEqual(1);
     });
 
-     it('`handleShoeRemove()` should delete the item from `state.cart`', () => {
-         const wrapper = shallow(<App/>);
-         const mockShoe = {name: 'Air Max 1000'};
-         wrapper.instance().handleShoeSelect(mockShoe);
-         expect(wrapper.state().cart.length).toEqual(1);
-         wrapper.instance().handleShoeRemove(mockShoe);
-         expect(wrapper.state().cart.length).toEqual(0);
+   it('`handleShoeRemove()` should delete the item from `state.cart`', () => {
+       const wrapper = shallow(<App/>);
+       const mockShoe = {brand: 'Nike', name: 'Air Max 90', price: 2999.99};
+       wrapper.instance().handleShoeSelect(mockShoe);
+       console.log("mockShoe",mockShoe);
+       console.log("wrapper.state().cart",wrapper.state().cart);
+       expect(wrapper.state().cart[0].amount).toEqual(2999.99);
+       expect(wrapper.state().cart[0].quantity).toEqual(1);
+       expect(wrapper.state().cart.length).toEqual(1);
+       wrapper.instance().handleShoeRemove(mockShoe);
+       expect(wrapper.state().cart.length).toEqual(0);
     });
 
 
- /*   it('`RemoveShoeSelect()` should remove  the item to `state.cart`', () => {
+
+    it('`handleShoeRemove()` should reduce the quantity when removing an item from multiple stack selected `state.cart`', () => {
         const wrapper = shallow(<App/>);
-        const mockShoess = [[{name: 'Ultra Boost',quantity:2,amount:"299.99"},{name: 'Ultra Peter',quantity:2,amount:"299.99"},{quantity:4},{amount:"349"}]];
+        const mockShoe = {brand: 'Nike', name: 'Air Max 90', price: 2999.99};
+        wrapper.instance().handleShoeSelect(mockShoe);
+        wrapper.instance().handleShoeSelect(mockShoe);
+        expect(wrapper.state().cart[0].amount).toEqual(5999.98);
+        expect(wrapper.state().cart[0].quantity).toEqual(2);
+        expect(wrapper.state().cart.length).toEqual(1);
+        wrapper.instance().handleShoeRemove(mockShoe);
+        expect(wrapper.state().cart[0].amount).toEqual(2999.99);
+        expect(wrapper.state().cart[0].quantity).toEqual(1);
+        expect(wrapper.state().cart.length).toEqual(1);
+    });
 
-        wrapper.instance().handleShoeSelect(mockShoess);
-        expect(wrapper.state().cart.length).toEqual(2);
-         wrapper.instance().handleShoeRemove(mockShoess);
-         expect(wrapper.state().cart.length).toEqual(1);
-         // expect(wrapper.state().cart).toContain(mockShoe);
 
-    });*/
+
 
 });
 

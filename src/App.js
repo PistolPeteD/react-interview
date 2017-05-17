@@ -86,17 +86,13 @@ class App extends Component {
     handleShoeRemove(shoe) {
 
         var tempcart = this.state.cart;
-        console.log("tempcart", tempcart);
-        console.log("shoe", shoe);
-
 
         var foundItem = tempcart.findIndex(function (existingItem) {
             return existingItem.name === shoe.name;
         });
 
         if (tempcart[foundItem].quantity == 1) {
-            // tempcart.pop(shoe.name);
-            //
+
             tempcart.splice(foundItem, 1);
 
         } else if (tempcart[foundItem].quantity > 1) {
@@ -150,7 +146,7 @@ class App extends Component {
 
 
     render() {
-        console.log("this.state.cart", this.state.cart)
+
         if (this.state.isMainIn) {
             return (
                 <div>
